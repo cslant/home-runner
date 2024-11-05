@@ -14,6 +14,13 @@ build_fe() {
 
   home_resource_env
 
+  if ! command -v nvm &> /dev/null; then
+    # shellcheck disable=SC2155
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  fi
+  nvm use "$NODE_VERSION"
+
   if ! command -v yarn &> /dev/null; then
     echo '  ∟ Installing yarn...'
     npm install -g yarn
