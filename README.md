@@ -1,4 +1,4 @@
-# CSlant Docs Runner
+# CSlant Home Runner
 
 ```text
 ██╗  ██╗ ██████╗ ███╗   ███╗███████╗    ██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ 
@@ -11,7 +11,7 @@
 
 This repo is to set up the runner for updating homepage at https://cslant.com
 
-We can use this runner to update the docs automatically with CI/CD pipelines.
+We can use this runner to update the Home automatically with CI/CD pipelines.
 
 ## Installation
 
@@ -63,6 +63,6 @@ The runner has the following commands:
 | Command  | Description                  |
 |----------|------------------------------|
 | `help`   | Shows the help message       |
-| `build`  | Builds the docs              |
+| `build`  | Builds the Home              |
 | `worker` | Create or restart the worker |
 | `all`    | Runs all the commands        |
