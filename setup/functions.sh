@@ -1,0 +1,76 @@
+#!/bin/bash
+
+build() {
+  echo '⚙ Building docs...'
+
+  cd "$DOCS_DIR" || exit
+
+  BUILD_TYPE="$1"
+  
+  if [ ! -f "$DOCS_DIR/.env" ]; then
+    echo '  ∟ .env file missing, copying from .env.example...'
+    cp "$DOCS_DIR/.env.example" "$DOCS_DIR/.env"
+  fi
+
+  if ! command -v yarn &> /dev/null; then
+    echo '  ∟ Installing yarn...'
+    npm install -g yarn
+  fi
+
+  if [ ! -d "$DOCS_DIR/node_modules" ] || [ "$BUILD_TYPE" = "install" ]; then
+    echo '  ∟ Installing dependencies...'
+    if [ "$INSTALLER" = "yarn" ]; then
+      yarn install
+    else
+      npm install
+    fi
+  else
+    echo '  ∟ Updating dependencies...'
+    if [ "$INSTALLER" = "yarn" ]; then
+      yarn upgrade
+    else
+      npm update
+    fi
+  fi
+
+  echo '  ∟ INSTALLER build...'
+  if [ "$ENV" = "prod" ]; then
+    node_runner build
+  else
+    node_runner start
+  fi
+  echo ''
+}
+
+worker() {
+  echo '📽 Starting worker...'
+
+  if pm2 show "$WORKER_NAME" > /dev/null; then
+    echo "  ∟ Restarting $WORKER_NAME..."
+    pm2 restart "$WORKER_NAME" --update-env
+  else
+    echo "  ∟ Starting $WORKER_NAME..."
+    cd "$DOCS_DIR" || exit
+
+    if [ "$INSTALLER" = "yarn" ]; then
+      pm2 start yarn --name "$WORKER_NAME" -- serve --port "$PORT"
+    else
+      pm2 start npm --name "$WORKER_NAME" -- run serve --port "$PORT"
+    fi
+    pm2 save
+  fi
+  echo ''
+}
+
+node_runner() {
+  echo '🏃‍♂️ Running node...'
+
+  cd "$DOCS_DIR" || exit
+
+  if [ "$INSTALLER" = "yarn" ]; then
+    yarn "$@"
+  else
+    npm run "$@"
+  fi
+  echo ''
+}
