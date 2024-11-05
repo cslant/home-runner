@@ -1,15 +1,15 @@
 #!/bin/bash
 
 build() {
-  echo '⚙ Building docs...'
-
-  cd "$DOCS_DIR" || exit
+  echo '⚙ Building home...'
 
   BUILD_TYPE="$1"
-  
-  if [ ! -f "$DOCS_DIR/.env" ]; then
+
+  cd "$HOME_DIR" || exit
+
+  if [ ! -f "$HOME_FE_DIR/.env" ]; then
     echo '  ∟ .env file missing, copying from .env.example...'
-    cp "$DOCS_DIR/.env.example" "$DOCS_DIR/.env"
+    cp "$HOME_FE_DIR/.env.example" "$HOME_FE_DIR/.env"
   fi
 
   if ! command -v yarn &> /dev/null; then
@@ -17,7 +17,7 @@ build() {
     npm install -g yarn
   fi
 
-  if [ ! -d "$DOCS_DIR/node_modules" ] || [ "$BUILD_TYPE" = "install" ]; then
+  if [ ! -d "$HOME_FE_DIR/node_modules" ] || [ "$BUILD_TYPE" = "install" ]; then
     echo '  ∟ Installing dependencies...'
     if [ "$INSTALLER" = "yarn" ]; then
       yarn install
@@ -37,7 +37,7 @@ build() {
   if [ "$ENV" = "prod" ]; then
     node_runner build
   else
-    node_runner start
+    node_runner dev
   fi
   echo ''
 }
@@ -45,18 +45,15 @@ build() {
 worker() {
   echo '📽 Starting worker...'
 
+  cd "$HOME_FE_DIR" || exit
+
   if pm2 show "$WORKER_NAME" > /dev/null; then
     echo "  ∟ Restarting $WORKER_NAME..."
-    pm2 restart "$WORKER_NAME" --update-env
+    pm2 reload ecosystem.config.cjs
   else
     echo "  ∟ Starting $WORKER_NAME..."
-    cd "$DOCS_DIR" || exit
 
-    if [ "$INSTALLER" = "yarn" ]; then
-      pm2 start yarn --name "$WORKER_NAME" -- serve --port "$PORT"
-    else
-      pm2 start npm --name "$WORKER_NAME" -- run serve --port "$PORT"
-    fi
+    pm2 start ecosystem.config.cjs
     pm2 save
   fi
   echo ''
@@ -65,7 +62,7 @@ worker() {
 node_runner() {
   echo '🏃‍♂️ Running node...'
 
-  cd "$DOCS_DIR" || exit
+  cd "$HOME_DIR" || exit
 
   if [ "$INSTALLER" = "yarn" ]; then
     yarn "$@"
