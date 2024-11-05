@@ -26,7 +26,7 @@ case "$1" in
     ;;
 
   build | build_home | b)
-    build "${2:-install}"
+    build_fe "${2:-install}"
     ;;
 
   worker | start_worker | w)
@@ -35,7 +35,7 @@ case "$1" in
 
   all | a)
     home_sync all
-    build install
+    build_fe install
     worker
     ;;
 

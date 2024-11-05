@@ -1,6 +1,6 @@
 #!/bin/bash
 
-build() {
+build_fe() {
   echo '⚙ Building home...'
 
   BUILD_TYPE="$1"
