@@ -36,6 +36,7 @@ case "$1" in
   all | a)
     home_sync all
     build_fe install
+    build_api install
     worker
     ;;
 

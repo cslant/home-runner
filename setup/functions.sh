@@ -5,7 +5,7 @@ build_fe() {
 
   BUILD_TYPE="$1"
 
-  cd "$HOME_DIR" || exit
+  cd "$HOME_FE_DIR" || exit
 
   if [ ! -f "$HOME_FE_DIR/.env" ]; then
     echo '  ∟ .env file missing, copying from .env.example...'
@@ -71,3 +71,29 @@ node_runner() {
   fi
   echo ''
 }
+
+# ========================================
+
+build_api() {
+  echo '⚙ Building home API (Laravel)...'
+
+  if [ "$1" == "install" ]; then
+    COMPOSER_COMMAND="install"
+  else
+    COMPOSER_COMMAND="update"
+  fi
+
+  cd "$HOME_API_DIR" || exit
+
+  if [ ! -f "$HOME_API_DIR/.env" ]; then
+    echo '  ∟ .env file missing, copying from .env.example...'
+    cp "$HOME_API_DIR/.env.example" "$HOME_API_DIR/.env"
+    composer $COMPOSER_COMMAND
+    php artisan key:generate
+  else
+    composer $COMPOSER_COMMAND
+  fi
+
+  echo ''
+}
+
