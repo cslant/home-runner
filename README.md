@@ -26,22 +26,24 @@ In the `.env` file, update the values to match your environment.
 ```bash
 # .env
 
-SOURCE_DIR=/home/user/repo_dir
+#SOURCE_DIR=~/source
+SOURCE_DIR=/home/user/cslant.com/home
 
 GIT_SSH_URL=git@github.com:cslant
 
-# cslant/docs.git
-DOCS_REPO=docs
-
-#DOCS_NAME=docusaurus-docs
-DOCS_NAME=main-docs
-
 # The name of the runner
-WORKER_NAME=cslant-docs
+WORKER_NAME="CSlant Home"
 
 # add the env to choose "npm" or "yarn" as the installer
 INSTALLER=yarn
-PORT=3000
+
+# App Config
+# E.g: prod, dev
+ENV=prod
+
+NODE_VERSION=22
+
+USE_SUBMODULES=false
 ```
 
 > [!IMPORTANT]
