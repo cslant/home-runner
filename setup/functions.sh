@@ -106,13 +106,11 @@ home_resource_env() {
 
   HOME_RESOURCE_DIR="$HOME_DIR/home-resource"
 
-
-
   # check and replace "PUBLIC_DIR=/Users/tanhongit/Data/CSlant/home-resource/public" to "PUBLIC_DIR=$HOME_RESOURCE_DIR/public"
-  if [ -f "$HOME_FE_DIR/.env" ]; then
-    if ! grep -q "PUBLIC_DIR=$HOME_RESOURCE_DIR/public" "$HOME_FE_DIR/.env"; then
-      echo '  ∟ Setting up PUBLIC_DIR...'
-      sed -i '' "s|PUBLIC_DIR=.*|PUBLIC_DIR=$HOME_RESOURCE_DIR/public|g" "$HOME_FE_DIR/.env"
-    fi
+  if [ -f "$HOME_FE_DIR/.env" ] && ! grep -q "PUBLIC_DIR=$HOME_RESOURCE_DIR/public" "$HOME_FE_DIR/.env"; then
+    echo '  ∟ Setting up PUBLIC_DIR...'
+    sed -i '' "s|PUBLIC_DIR=.*|PUBLIC_DIR=$HOME_RESOURCE_DIR/public|g" "$HOME_FE_DIR/.env"
+  else
+    echo '  ∟ PUBLIC_DIR already set up...'
   fi
 }
