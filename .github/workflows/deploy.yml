@@ -17,5 +17,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_PORT }}
           script: |
-            cd ${{ secrets.DOCS_RUNNER_PATH }}
-            ${{ secrets.DOCS_RUNNER_SPECIAL_COMMAND }}
+            cd ${{ secrets.HOME_RUNNER_PATH }}
+            ${{ secrets.HOME_RUNNER_SPECIAL_COMMAND }}
