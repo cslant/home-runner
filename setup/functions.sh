@@ -62,7 +62,7 @@ worker() {
 node_runner() {
   echo '🏃‍♂️ Running node...'
 
-  cd "$HOME_DIR" || exit
+  cd "$HOME_FE_DIR" || exit
 
   if [ "$INSTALLER" = "yarn" ]; then
     yarn "$@"

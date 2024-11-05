@@ -3,7 +3,7 @@
 # shellcheck disable=SC2034
 CURRENT_DIR=$(pwd)
 SOURCE_DIR=$(readlink -f "$SOURCE_DIR")
-HOME_DIR="$SOURCE_DIR/$HOME_NAME"
+HOME_DIR="$SOURCE_DIR"
 HOME_FE_DIR="$HOME_DIR/home-fe"
 HOME_API_DIR="$HOME_DIR/home-api"
 ENV=${ENV:-prod}
