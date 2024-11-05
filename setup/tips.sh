@@ -2,20 +2,19 @@
 
 welcome() {
   echo '
- ██████╗███████╗██╗      █████╗ ███╗   ██╗████████╗    ██████╗  ██████╗  ██████╗███████╗
-██╔════╝██╔════╝██║     ██╔══██╗████╗  ██║╚══██╔══╝    ██╔══██╗██╔═══██╗██╔════╝██╔════╝
-██║     ███████╗██║     ███████║██╔██╗ ██║   ██║       ██║  ██║██║   ██║██║     ███████╗
-██║     ╚════██║██║     ██╔══██║██║╚██╗██║   ██║       ██║  ██║██║   ██║██║     ╚════██║
-╚██████╗███████║███████╗██║  ██║██║ ╚████║   ██║       ██████╔╝╚██████╔╝╚██████╗███████║
- ╚═════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝       ╚═════╝  ╚═════╝  ╚═════╝╚══════╝
+██╗  ██╗ ██████╗ ███╗   ███╗███████╗    ██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗
+██║  ██║██╔═══██╗████╗ ████║██╔════╝    ██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
+███████║██║   ██║██╔████╔██║█████╗      ██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
+██╔══██║██║   ██║██║╚██╔╝██║██╔══╝      ██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
+██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║
+╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
   '
   echo ''
-  echo '⚡ Welcome to the docs runner!'
+  echo '⚡ Welcome to the home runner!'
   echo ''
   echo "- Current dir        : $CURRENT_DIR"
   echo "- Source dir         : $SOURCE_DIR"
-  echo "- Docs name          : $DOCS_NAME"
-  echo "- Docs dir           : $DOCS_DIR"
+  echo "- Home dir           : $HOME_DIR"
   echo ''
 }
 
@@ -26,14 +25,14 @@ usage() {
   echo 'Commands:'
   echo '  welcome         Show welcome message'
   echo '  help            Show this help message'
-  echo '  git_sync        Sync git repository'
-  echo '  docs_sync       Sync docs repository'
-  echo '  build           Build docs'
+  echo '  home_sync       Sync docs repository'
+  echo '  build           Build home'
   echo '  worker          Start worker'
   echo '  all             Sync git and docs repository, build docs'
   echo ''
-  echo 'Args for docs_sync:'
-  echo '  tgn             Sync telegram-git-notifier-docs repository'
+  echo 'Args for home_sync:'
+  echo '  fe              Sync frontend home repository'
+  echo '  api             Sync backend API home repository'
   echo '  all             Sync all docs repository'
   echo ''
   echo 'Args for build:'
@@ -41,8 +40,7 @@ usage() {
   echo '  update          Update dependencies and build'
   echo ''
   echo 'Example:'
-  echo "  bash $0 git_sync"
-  echo "  bash $0 docs_sync all"
+  echo "  bash $0 home_sync all"
   echo "  bash $0 build"
   echo ''
 }

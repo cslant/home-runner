@@ -21,15 +21,11 @@ case "$1" in
     usage
     ;;
 
-  git_sync)
-    git_sync
+  home_sync)
+    home_sync "$2"
     ;;
 
-  docs_sync)
-    docs_sync "$2"
-    ;;
-
-  build | build_docs | b)
+  build | build_home | b)
     build "${2:-install}"
     ;;
 
@@ -38,8 +34,7 @@ case "$1" in
     ;;
 
   all | a)
-    git_sync
-    docs_sync all
+    home_sync all
     build install
     worker
     ;;
