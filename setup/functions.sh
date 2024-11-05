@@ -12,6 +12,8 @@ build_fe() {
     cp "$HOME_FE_DIR/.env.example" "$HOME_FE_DIR/.env"
   fi
 
+  home_resource_env
+
   if ! command -v yarn &> /dev/null; then
     echo '  ∟ Installing yarn...'
     npm install -g yarn
@@ -97,3 +99,20 @@ build_api() {
   echo ''
 }
 
+home_resource_env() {
+  echo '🔧 Setting up home resource environment...'
+
+  cd "$HOME_FE_DIR" || exit
+
+  HOME_RESOURCE_DIR="$HOME_DIR/home-resource"
+
+
+
+  # check and replace "PUBLIC_DIR=/Users/tanhongit/Data/CSlant/home-resource/public" to "PUBLIC_DIR=$HOME_RESOURCE_DIR/public"
+  if [ -f "$HOME_FE_DIR/.env" ]; then
+    if ! grep -q "PUBLIC_DIR=$HOME_RESOURCE_DIR/public" "$HOME_FE_DIR/.env"; then
+      echo '  ∟ Setting up PUBLIC_DIR...'
+      sed -i '' "s|PUBLIC_DIR=.*|PUBLIC_DIR=$HOME_RESOURCE_DIR/public|g" "$HOME_FE_DIR/.env"
+    fi
+  fi
+}
