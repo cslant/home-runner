@@ -116,7 +116,7 @@ home_resource_env() {
   # check and replace "PUBLIC_DIR=/Users/tanhongit/Data/CSlant/home-resource/public" to "PUBLIC_DIR=$HOME_RESOURCE_DIR/public"
   if [ -f "$HOME_FE_DIR/.env" ] && ! grep -q "PUBLIC_DIR=$HOME_RESOURCE_DIR/public" "$HOME_FE_DIR/.env"; then
     echo '  ∟ Setting up PUBLIC_DIR...'
-    awk -v var="PUBLIC_DIR=$HOME_RESOURCE_DIR/public" 'BEGIN{FS=OFS="="} $1=="PUBLIC_DIR"{$2=var}1' "$HOME_FE_DIR/.env" > temp && mv temp "$HOME_FE_DIR/.env"
+    awk -v HOME_RESOURCE_DIR="$HOME_RESOURCE_DIR" '/PUBLIC_DIR=/{gsub(/PUBLIC_DIR=.*/, "PUBLIC_DIR="HOME_RESOURCE_DIR"/public")}1' "$HOME_FE_DIR/.env" >"$HOME_FE_DIR/.env.tmp" && mv "$HOME_FE_DIR/.env.tmp" "$HOME_FE_DIR/.env"
   else
     echo '  ∟ PUBLIC_DIR already set up...'
   fi
