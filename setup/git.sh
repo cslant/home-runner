@@ -1,7 +1,7 @@
 #!/bin/bash
 
 home_sync() {
-  echo '📥 Syncing docs...'
+  echo '📥 Syncing Home...'
   echo ''
 
   case "$1" in
