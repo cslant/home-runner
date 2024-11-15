@@ -21,6 +21,12 @@ First, copy the `.env.example` file to `.env` and update the values.
 envsubst < .env.example > .env
 ```
 
+If you don't have `envsubst` command, you can use the following command:
+
+```bash
+cp .env.example .env
+```
+
 In the `.env` file, update the values to match your environment.
 
 ```bash
