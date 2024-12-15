@@ -98,7 +98,7 @@ build_api() {
     echo '  ∟ .env file missing, copying from .env.example...'
     cp "$HOME_API_DIR/.env.example" "$HOME_API_DIR/.env"
     composer $COMPOSER_COMMAND
-    php artisan key:generate
+    /usr/bin/php8.4 artisan key:generate
   else
     composer $COMPOSER_COMMAND
   fi
