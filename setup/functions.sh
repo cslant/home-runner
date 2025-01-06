@@ -100,7 +100,7 @@ build_api() {
     composer $COMPOSER_COMMAND
     /usr/bin/php8.4 artisan key:generate
   else
-    composer $COMPOSER_COMMAND
+    composer "$COMPOSER_COMMAND"
   fi
 
   echo ''
