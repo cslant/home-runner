@@ -15,8 +15,8 @@ build_fe() {
   home_resource_env
 
   if ! command -v nvm &> /dev/null; then
-    # shellcheck disable=SC2155
-    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    export NVM_DIR="$HOME/.nvm"
+    # shellcheck disable=SC1091
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   fi
   nvm use "$NODE_VERSION"
@@ -97,10 +97,10 @@ build_api() {
   if [ ! -f "$HOME_API_DIR/.env" ]; then
     echo '  ∟ .env file missing, copying from .env.example...'
     cp "$HOME_API_DIR/.env.example" "$HOME_API_DIR/.env"
-    composer $COMPOSER_COMMAND
+    composer "$COMPOSER_COMMAND"
     /usr/bin/php8.4 artisan key:generate
   else
-    composer $COMPOSER_COMMAND
+    composer "$COMPOSER_COMMAND"
   fi
 
   echo ''
