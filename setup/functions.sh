@@ -97,10 +97,12 @@ build_api() {
   if [ ! -f "$HOME_API_DIR/.env" ]; then
     echo '  ∟ .env file missing, copying from .env.example...'
     cp "$HOME_API_DIR/.env.example" "$HOME_API_DIR/.env"
-    composer "$COMPOSER_COMMAND"
+    # shellcheck disable=SC2086
+    composer $COMPOSER_COMMAND
     /usr/bin/php8.4 artisan key:generate
   else
-    composer "$COMPOSER_COMMAND"
+    # shellcheck disable=SC2086
+    composer $COMPOSER_COMMAND
   fi
 
   echo ''
