@@ -16,7 +16,7 @@ build_fe() {
 
   if ! command -v nvm &> /dev/null; then
     export NVM_DIR="$HOME/.nvm"
-    # shellcheck disable=SC1090
+    # shellcheck disable=SC1091
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   fi
   nvm use "$NODE_VERSION"
