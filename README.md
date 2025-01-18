@@ -66,9 +66,10 @@ Then, you can just run the following command to start the runner.
 
 The runner has the following commands:
 
-| Command        | Description                  |
-|----------------|------------------------------|
-| `help`, `tips` | Shows the help message       |
-| `build`, `b`   | Builds the Home              |
-| `worker`, `w`  | Create or restart the worker |
-| `all`, `a`     | Runs all the commands        |
+| Command          | Description                  |
+|------------------|------------------------------|
+| `help`, `tips`   | Shows the help message       |
+| `build`, `b`     | Builds the Home              |
+| `worker`, `w`    | Create or restart the worker |
+| `all`, `a`       | Runs all the commands        |
+| `resources`, `r` | Sync the home resources      |

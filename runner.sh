@@ -34,6 +34,10 @@ case "$1" in
     worker
     ;;
 
+  resources | sync_resources | r)
+    home_resource_env
+    ;;
+
   all | a)
     home_sync all
     build_fe install
