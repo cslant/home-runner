@@ -51,6 +51,57 @@ build_fe() {
   echo ''
 }
 
+build_fe2() {
+  echo '⚙ Building home V2...'
+
+  BUILD_TYPE="$1"
+
+  cd "$HOME_FE2_DIR" || exit
+
+  if [ ! -f "$HOME_FE2_DIR/.env" ]; then
+    echo '  ∟ .env file missing, copying from .env.example...'
+    cp "$HOME_FE2_DIR/.env.example" "$HOME_FE2_DIR/.env"
+  fi
+
+  home_resource_env
+
+  if ! command -v nvm &> /dev/null; then
+    export NVM_DIR="$HOME/.nvm"
+    # shellcheck disable=SC1091
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  fi
+  nvm use "$NODE_VERSION"
+
+  if ! command -v yarn &> /dev/null; then
+    echo '  ∟ Installing yarn...'
+    npm install -g yarn
+  fi
+
+  if [ ! -d "$HOME_FE2_DIR/node_modules" ] || [ "$BUILD_TYPE" = "install" ]; then
+    echo '  ∟ Installing dependencies...'
+    if [ "$INSTALLER" = "yarn" ]; then
+      yarn install
+    else
+      npm install
+    fi
+  else
+    echo '  ∟ Updating dependencies...'
+    if [ "$INSTALLER" = "yarn" ]; then
+      yarn upgrade
+    else
+      npm update
+    fi
+  fi
+
+  echo '  ∟ INSTALLER build...'
+  if [ "$ENV" = "prod" ]; then
+    node_runner build
+  else
+    node_runner dev
+  fi
+  echo ''
+}
+
 worker() {
   echo '📽 Starting worker...'
 

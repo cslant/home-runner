@@ -32,6 +32,7 @@ usage() {
   echo ''
   echo 'Args for home_sync:'
   echo '  fe              Sync frontend home repository'
+  echo '  fe2             Sync frontend home repository'
   echo '  api             Sync backend API home repository'
   echo '  all             Sync all Home repository'
   echo ''

@@ -9,6 +9,10 @@ home_sync() {
       home_fe_sync
       ;;
 
+    fe2)
+      home_fe2_sync
+      ;;
+
     api)
       home_api_sync
       ;;
@@ -22,7 +26,8 @@ home_sync() {
         clone_submodules
       else
         home_resources_sync
-        home_fe_sync
+        #home_fe_sync
+        home_fe2_sync
         home_api_sync
       fi
       ;;
@@ -73,6 +78,10 @@ repo_sync_template() {
 
 home_fe_sync() {
   repo_sync_template 'home' 'home-fe'
+}
+
+home_fe2_sync() {
+  repo_sync_template 'home-fe2'
 }
 
 home_api_sync() {
