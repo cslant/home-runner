@@ -44,9 +44,9 @@ build_fe() {
 
   echo '  ∟ INSTALLER build...'
   if [ "$ENV" = "prod" ]; then
-    node_runner build
+    node_runner "$HOME_FE_DIR" build
   else
-    node_runner dev
+    node_runner "$HOME_FE_DIR" dev
   fi
   echo ''
 }
@@ -95,9 +95,9 @@ build_fe2() {
 
   echo '  ∟ INSTALLER build...'
   if [ "$ENV" = "prod" ]; then
-    node_runner build
+    node_runner "$HOME_FE2_DIR" build
   else
-    node_runner dev
+    node_runner "$HOME_FE2_DIR" dev
   fi
   echo ''
 }
@@ -139,7 +139,10 @@ worker2() {
 node_runner() {
   echo '🏃‍♂️ Running node...'
 
-  cd "$HOME_FE_DIR" || exit
+  TARGET_DIR="$1"
+  shift
+
+  cd "$TARGET_DIR" || exit
 
   if [ "$INSTALLER" = "yarn" ]; then
     yarn "$@"
