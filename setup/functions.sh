@@ -63,7 +63,7 @@ build_fe2() {
     cp "$HOME_FE2_DIR/.env.example" "$HOME_FE2_DIR/.env"
   fi
 
-  home_resource_env
+  fe2_resource_env
 
   if ! command -v nvm &> /dev/null; then
     export NVM_DIR="$HOME/.nvm"
@@ -177,5 +177,21 @@ home_resource_env() {
     awk -v HOME_RESOURCE_DIR="$HOME_RESOURCE_DIR" '/PUBLIC_DIR=/{gsub(/PUBLIC_DIR=.*/, "PUBLIC_DIR="HOME_RESOURCE_DIR"/public")}1' "$HOME_FE_DIR/.env" >"$HOME_FE_DIR/.env.tmp" && mv "$HOME_FE_DIR/.env.tmp" "$HOME_FE_DIR/.env"
   else
     echo '  ∟ PUBLIC_DIR already set up...'
+  fi
+}
+
+fe2_resource_env() {
+  echo '🔧 Setting up home resource environment...'
+
+  cd "$HOME_FE2_DIR" || exit
+
+  HOME_RESOURCE_DIR="$HOME_DIR/home-resource"
+
+  # copy folder "/Users/tanhongit/Data/CSlant/home-resource/public/v2" to "$HOME_FE2_DIR/public" if not exist
+  if [ ! -d "$HOME_FE2_DIR/public" ]; then
+    echo '  ∟ Copying public folder...'
+    cp -r "$HOME_RESOURCE_DIR/public/v2" "$HOME_FE2_DIR/public"
+  else
+    echo '  ∟ Public folder already exist...'
   fi
 }
