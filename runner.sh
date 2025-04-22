@@ -35,11 +35,7 @@ case "$1" in
     ;;
 
   worker | start_worker | w)
-    worker
-    ;;
-
-  worker2 | start_worker2 | w2)
-    worker2
+    worker "${2:-$HOME_FE2_DIR}"
     ;;
 
   resources | sync_resources | r)
@@ -51,7 +47,7 @@ case "$1" in
     home_sync all
     build_fe2 install
     build_api install
-    worker2
+    worker "$HOME_FE2_DIR"
     ;;
 
   *)

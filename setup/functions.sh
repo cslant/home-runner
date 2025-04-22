@@ -105,24 +105,9 @@ build_fe2() {
 worker() {
   echo '📽 Starting worker...'
 
-  cd "$HOME_FE_DIR" || exit
+  TARGET_DIR="$1"
 
-  if pm2 show "$WORKER_NAME" > /dev/null; then
-    echo "  ∟ Restarting $WORKER_NAME..."
-    pm2 reload ecosystem.config.cjs
-  else
-    echo "  ∟ Starting $WORKER_NAME..."
-
-    pm2 start ecosystem.config.cjs
-    pm2 save
-  fi
-  echo ''
-}
-
-worker2() {
-  echo '📽 Starting worker...'
-
-  cd "$HOME_FE2_DIR" || exit
+  cd "$TARGET_DIR" || exit
 
   if pm2 show "$WORKER_NAME" > /dev/null; then
     echo "  ∟ Restarting $WORKER_NAME..."
