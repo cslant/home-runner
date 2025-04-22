@@ -30,8 +30,16 @@ case "$1" in
     build_fe "${2:-install}"
     ;;
 
+  build_fe2 | b2)
+    build_fe2 "${2:-install}"
+    ;;
+
   worker | start_worker | w)
     worker
+    ;;
+
+  worker2 | start_worker2 | w2)
+    worker2
     ;;
 
   resources | sync_resources | r)
@@ -41,9 +49,9 @@ case "$1" in
 
   all | a)
     home_sync all
-    build_fe install
+    build_fe2 install
     build_api install
-    worker
+    worker2
     ;;
 
   *)
