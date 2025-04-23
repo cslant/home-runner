@@ -87,10 +87,8 @@ build_fe2() {
     echo '  ∟ Installing dependencies...'
     if [ "$INSTALLER" = "yarn" ]; then
       yarn install
-      yarn watch-css
     else
       npm install
-      npm run watch-css
     fi
   else
     echo '  ∟ Updating dependencies...'
@@ -100,6 +98,8 @@ build_fe2() {
       npm update
     fi
   fi
+
+  node_runner "$HOME_FE2_DIR" build-css
 
   echo '  ∟ INSTALLER build...'
   if [ "$ENV" = "prod" ]; then
