@@ -77,12 +77,20 @@ build_fe2() {
     npm install -g yarn
   fi
 
+  # Install sass if not installed
+    if ! command -v sass &> /dev/null; then
+        echo '  ∟ Installing sass...'
+        npm install -g sass
+    fi
+
   if [ ! -d "$HOME_FE2_DIR/node_modules" ] || [ "$BUILD_TYPE" = "install" ]; then
     echo '  ∟ Installing dependencies...'
     if [ "$INSTALLER" = "yarn" ]; then
       yarn install
+      yarn watch-css
     else
       npm install
+      npm run watch-css
     fi
   else
     echo '  ∟ Updating dependencies...'
