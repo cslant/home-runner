@@ -46,7 +46,7 @@ case "$1" in
   all | a)
     home_sync all
     build_fe2 install
-    build_api install
+    # build_api install
     worker "$HOME_FE2_DIR"
     ;;
 
