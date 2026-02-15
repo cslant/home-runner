@@ -105,6 +105,7 @@ build_fe2() {
 
   echo '  ∟ INSTALLER build...'
   if [ "$ENV" = "prod" ]; then
+    node_runner "$HOME_FE2_DIR" build-css
     node_runner "$HOME_FE2_DIR" build
   else
     node_runner "$HOME_FE2_DIR" dev
