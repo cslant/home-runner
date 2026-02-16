@@ -40,7 +40,7 @@ case "$1" in
 
   resources | sync_resources | r)
     home_resources_sync
-    home_resource_env
+    # home_resource_env
     ;;
 
   all | a)
