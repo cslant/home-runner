@@ -89,5 +89,6 @@ home_api_sync() {
 }
 
 home_resources_sync() {
-  repo_sync_template 'home-resource' 'home-resource' 'git@github.com:cslant-community/home-resource.git'
+  # repo_sync_template 'home-resource' 'home-resource' 'git@github.com:cslant-community/home-resource.git'
+  repo_sync_template 'home-resource'
 }
