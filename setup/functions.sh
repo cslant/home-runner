@@ -59,7 +59,7 @@ build_fe2() {
 
   if [ "$BUILD_MODE" = "cache" ]; then
     # Build to builds/home-fe2 outside home-fe2
-    CACHE_BUILD_DIR="$(dirname "$HOME_FE2_DIR")/../builds/home-fe2"
+    CACHE_BUILD_DIR="$(dirname "$HOME_FE2_DIR")/builds/home-fe2"
     echo "  ∟ Cache build: $CACHE_BUILD_DIR"
     mkdir -p "$CACHE_BUILD_DIR"
     cp -r "$HOME_FE2_DIR/." "$CACHE_BUILD_DIR/"
