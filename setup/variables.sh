@@ -10,3 +10,4 @@ HOME_API_DIR="$HOME_DIR/home-api"
 ENV=${ENV:-prod}
 GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
 USE_SUBMODULES=${USE_SUBMODULES:-false}
+NVM_DIR=${NVM_DIR:-/usr/local/nvm}

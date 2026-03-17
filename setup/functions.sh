@@ -16,7 +16,7 @@ build_fe() {
 
   if ! command -v nvm &> /dev/null; then
     # export NVM_DIR="$HOME/.nvm"
-    export NVM_DIR="/usr/local/nvm"
+    # export NVM_DIR="/usr/local/nvm" # Moved to variables.sh
     # shellcheck disable=SC1091
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   fi
@@ -57,6 +57,61 @@ build_fe2() {
 
   BUILD_TYPE="$1"
 
+  if [ "$BUILD_TYPE" = "special" ]; then
+    # Build to builds/home-fe2 outside home-fe2
+    SPECIAL_BUILD_DIR="$(dirname "$HOME_FE2_DIR")/../builds/home-fe2"
+    echo "  ∟ Special build: $SPECIAL_BUILD_DIR"
+    mkdir -p "$SPECIAL_BUILD_DIR"
+    cp -r "$HOME_FE2_DIR/." "$SPECIAL_BUILD_DIR/"
+    cd "$SPECIAL_BUILD_DIR" || exit
+
+    if [ ! -f "$SPECIAL_BUILD_DIR/.env" ]; then
+      echo '  ∟ .env file missing, copying from .env.example...'
+      cp "$SPECIAL_BUILD_DIR/.env.example" "$SPECIAL_BUILD_DIR/.env"
+    fi
+
+    fe2_resource_env
+
+    if ! command -v nvm &> /dev/null; then
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    fi
+    nvm use "$NODE_VERSION"
+
+    if ! command -v yarn &> /dev/null; then
+      echo '  ∟ Installing yarn...'
+      npm install -g yarn
+    fi
+
+    if ! command -v sass &> /dev/null; then
+      echo '  ∟ Installing sass...'
+      npm install -g sass
+    fi
+
+    echo '  ∟ Installing dependencies...'
+    if [ "$INSTALLER" = "yarn" ]; then
+      yarn install
+    else
+      npm install
+    fi
+
+    node_runner "$SPECIAL_BUILD_DIR" build-css
+    echo '  ∟ INSTALLER build...'
+    node_runner "$SPECIAL_BUILD_DIR" build
+
+    # Move .next to home-fe2, clear old cache, keep zero downtime
+    CACHE_DIR="$HOME_FE2_DIR/cache"
+    echo "  ∟ Moving new .next to $CACHE_DIR"
+    mkdir -p "$CACHE_DIR"
+    rm -rf "$CACHE_DIR/.next.old"
+    mv "$CACHE_DIR/.next" "$CACHE_DIR/.next.old" 2>/dev/null || true
+    rm -rf "$CACHE_DIR/.next"
+    mv "$SPECIAL_BUILD_DIR/.next" "$CACHE_DIR/.next"
+    echo "  ∟ .next moved, old cache removed, zero downtime maintained"
+    cd "$HOME_FE2_DIR" || exit
+    echo ''
+    return
+  fi
+
   cd "$HOME_FE2_DIR" || exit
 
   if [ ! -f "$HOME_FE2_DIR/.env" ]; then
@@ -79,11 +134,10 @@ build_fe2() {
     npm install -g yarn
   fi
 
-  # Install sass if not installed
-    if ! command -v sass &> /dev/null; then
-        echo '  ∟ Installing sass...'
-        npm install -g sass
-    fi
+  if ! command -v sass &> /dev/null; then
+    echo '  ∟ Installing sass...'
+    npm install -g sass
+  fi
 
   if [ ! -d "$HOME_FE2_DIR/node_modules" ] || [ "$BUILD_TYPE" = "install" ]; then
     echo '  ∟ Installing dependencies...'

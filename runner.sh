@@ -44,10 +44,15 @@ case "$1" in
     ;;
 
   all | a)
-    home_sync all
-    build_fe2 install
-    # build_api install
-    worker "$HOME_FE2_DIR"
+    if [ "$2" = "-special" ]; then
+      home_sync all
+      build_fe2 special
+      worker "$HOME_FE2_DIR"
+    else
+      home_sync all
+      build_fe2 install
+      worker "$HOME_FE2_DIR"
+    fi
     ;;
 
   *)
