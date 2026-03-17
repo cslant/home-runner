@@ -73,6 +73,7 @@ build_fe2() {
     fe2_resource_env
 
     if ! command -v nvm &> /dev/null; then
+      # shellcheck disable=SC1091
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     fi
     nvm use "$NODE_VERSION"
