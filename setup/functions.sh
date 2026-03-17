@@ -99,14 +99,14 @@ build_fe2() {
     echo '  ∟ INSTALLER build...'
     node_runner "$CACHE_BUILD_DIR" build
 
-    # Move .next to home-fe2, clear old cache, keep zero downtime
+    # Move dist to home-fe2, clear old cache, keep zero downtime
     CACHE_TARGET="$HOME_FE2_DIR"
-    echo "  ∟ Moving new .next to $CACHE_TARGET"
-    rm -rf "$CACHE_TARGET/.next.old"
-    mv "$CACHE_TARGET/.next" "$CACHE_TARGET/.next.old" 2>/dev/null || true
-    rm -rf "$CACHE_TARGET/.next"
-    mv "$CACHE_BUILD_DIR/.next" "$CACHE_TARGET/.next"
-    echo "  ∟ .next moved, old cache removed, zero downtime maintained"
+    echo "  ∟ Moving new dist to $CACHE_TARGET"
+    rm -rf "$CACHE_TARGET/dist.old"
+    mv "$CACHE_TARGET/dist" "$CACHE_TARGET/dist.old" 2>/dev/null || true
+    rm -rf "$CACHE_TARGET/dist"
+    mv "$CACHE_BUILD_DIR/dist" "$CACHE_TARGET/dist"
+    echo "  ∟ dist moved, old cache removed, zero downtime maintained"
     cd "$HOME_FE2_DIR" || exit
     echo ''
     return
@@ -161,6 +161,15 @@ build_fe2() {
   if [ "$ENV" = "prod" ]; then
     node_runner "$HOME_FE2_DIR" build-css
     node_runner "$HOME_FE2_DIR" build
+    # Move dist to prod
+    PROD_TARGET="$HOME_FE2_DIR/prod"
+    echo "  ∟ Moving new dist to $PROD_TARGET"
+    mkdir -p "$PROD_TARGET"
+    rm -rf "$PROD_TARGET/dist.old"
+    mv "$PROD_TARGET/dist" "$PROD_TARGET/dist.old" 2>/dev/null || true
+    rm -rf "$PROD_TARGET/dist"
+    cp -r "$HOME_FE2_DIR/dist" "$PROD_TARGET/dist"
+    echo "  ∟ dist moved to prod, old cache removed, zero downtime maintained"
   else
     node_runner "$HOME_FE2_DIR" dev
   fi
