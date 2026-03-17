@@ -62,7 +62,9 @@ build_fe2() {
     CACHE_BUILD_DIR="$(dirname "$HOME_FE2_DIR")/builds/home-fe2"
     echo "  ∟ Cache build: $CACHE_BUILD_DIR"
     mkdir -p "$CACHE_BUILD_DIR"
-    cp -r "$HOME_FE2_DIR/." "$CACHE_BUILD_DIR/"
+
+    # cp but skip node_modules and .git
+    cp -r --exclude='node_modules' --exclude='.git' "$HOME_FE2_DIR/." "$CACHE_BUILD_DIR/"
     cd "$CACHE_BUILD_DIR" || exit
 
     if [ ! -f "$CACHE_BUILD_DIR/.env" ]; then
