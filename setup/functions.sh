@@ -64,7 +64,7 @@ build_fe2() {
     mkdir -p "$CACHE_BUILD_DIR"
 
     # cp but skip node_modules and .git
-    cp -r --exclude='node_modules' --exclude='.git' "$HOME_FE2_DIR/." "$CACHE_BUILD_DIR/"
+    rsync -a --exclude='node_modules' --exclude='.git' "$HOME_FE2_DIR/" "$CACHE_BUILD_DIR/"
     cd "$CACHE_BUILD_DIR" || exit
 
     if [ ! -f "$CACHE_BUILD_DIR/.env" ]; then
