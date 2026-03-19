@@ -44,7 +44,7 @@ case "$1" in
     ;;
 
   all | a)
-    if [ "$2" = "--cache" ]; then
+    if [ "${2:-}" = "--cache" ]; then
       home_sync all
       build_fe2 cache
       worker "$HOME_FE2_DIR"
