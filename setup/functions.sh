@@ -163,15 +163,6 @@ build_fe2() {
   if [ "$ENV" = "prod" ]; then
     node_runner "$HOME_FE2_DIR" build-css
     node_runner "$HOME_FE2_DIR" build
-    # Move dist to prod
-    PROD_TARGET="$HOME_FE2_DIR/prod"
-    echo "  ∟ Moving new dist to $PROD_TARGET"
-    mkdir -p "$PROD_TARGET"
-    rm -rf "$PROD_TARGET/dist.old"
-    mv "$PROD_TARGET/dist" "$PROD_TARGET/dist.old" 2>/dev/null || true
-    rm -rf "$PROD_TARGET/dist"
-    cp -r "$HOME_FE2_DIR/dist" "$PROD_TARGET/dist"
-    echo "  ∟ dist moved to prod, old cache removed, zero downtime maintained"
   else
     node_runner "$HOME_FE2_DIR" dev
   fi
